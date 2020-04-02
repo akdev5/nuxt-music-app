@@ -6,6 +6,7 @@
 * Nuxt.js
 * Node.js
 * Express.js
+* Multer
 
 ## Project setup
 On both of server and client side,
@@ -14,13 +15,13 @@ On both of server and client side,
 npm install
 ```
 
-### Compiles and hot-reloads for development on Client
+### Compiles and hot-reloads client for development
 ```
 cd client
 npm run start
 ```
 
-### Run server for development on Client
+### Run server for development
 ```
 cd server
 node index.js
