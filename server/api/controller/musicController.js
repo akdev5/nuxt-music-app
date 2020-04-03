@@ -29,7 +29,7 @@ exports.addMusic = async (req, res) => {
 exports.deleteMusic = async (req, res) => {
   try {
     const id = req.params.musicId;
-    const result = await Music.remove({ _id: id });
+    const result = await Music.deleteOne({ _id: id });
 
     res.status(200).json(result);
   } catch (err) {

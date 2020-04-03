@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const config = require('./config/db');
+
 const app = express();
 
 const port = process.env.PORT || 4000;
@@ -12,7 +13,10 @@ const port = process.env.PORT || 4000;
 // configure database and mongoose
 mongoose.set('useCreateIndex', true);
 mongoose
-  .connect(config.database, { useNewUrlParser: true })
+  .connect(config.database, {
+  	useUnifiedTopology: true,
+  	useNewUrlParser: true
+  })
   .then(() => {
     console.log('Database is connected');
   })
@@ -42,5 +46,5 @@ const musicRoutes = require('./api/routes/music');
 app.use('/music', musicRoutes)
 
 app.listen(port, () => {
-  console.log(`App is running on ${PORT}`);
+  console.log(`App is running on ${port}`);
 });
