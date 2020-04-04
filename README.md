@@ -1,5 +1,7 @@
 # Nuxt Music Manager
 
+> This introduces how Multer streamlines the process of handling file uploads. It also introduces how to use Mongoose to interact with the database by building a music manager app using Express.js alongside Multer for the music upload and Nuxt.js (Vue framework) as frontend.
+
 ## Technology Used
 
 * Vue
@@ -9,7 +11,7 @@
 * Multer
 
 ## Project setup
-On both of server and client side,
+On both of `server` and `client` directories,
 
 ```
 npm install
@@ -21,7 +23,7 @@ cd client
 npm run start
 ```
 
-### Run server for development
+### Run the server for development
 ```
 cd server
 node index.js
