@@ -36,12 +36,12 @@ app.use(morgan('dev'));
 
 app.use('/uploads', express.static('uploads'));
 
-// define first route
+// define main route
 app.get('/', (req, res) => {
-  res.json('Hola MEVN devs...Assemble');
+  res.json('Here is API response');
 });
 
-// bring in user routes
+// bring in music routes
 const musicRoutes = require('./api/routes/music');
 app.use('/music', musicRoutes)
 
