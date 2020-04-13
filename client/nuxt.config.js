@@ -39,7 +39,7 @@ module.exports = {
   ** Nuxt.js modules
   */
   modules: [
-    // Doc: https://bootstrap-vue.js.org
+    '@nuxtjs/axios',
     'bootstrap-vue/nuxt',
   ],
   /*
@@ -51,5 +51,12 @@ module.exports = {
     */
     extend (config, ctx) {
     }
+  },
+  /*
+  ** Axios configuration
+  */
+  axios: {
+    // proxyHeaders: false
+    baseURL:'http://localhost:4000'
   }
 }
