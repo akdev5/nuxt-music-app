@@ -41,6 +41,7 @@ module.exports = {
   modules: [
     '@nuxtjs/axios',
     'bootstrap-vue/nuxt',
+    'nuxt-sweetalert2',
   ],
   /*
   ** Build configuration

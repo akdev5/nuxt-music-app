@@ -1,16 +1,15 @@
 <template>
   <div>
-    <navbar />
-    <nuxt />
+    <manager />
   </div>
 </template>
 
 <script>
-  import navbar from '@/components/global/navbar'
+  import manager from '@/components/pages/manager'
 
   export default {
     components: {
-      navbar
+      manager
     }
   }
 </script>
