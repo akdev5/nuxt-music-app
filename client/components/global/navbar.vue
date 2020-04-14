@@ -1,37 +1,16 @@
 <template>
   <header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-info">
+    <b-navbar toggleable="lg" type="dark" variant="info">
       <div class="container">
-        <nuxt-link to="/" class="navbar-brand">Music App</nuxt-link>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item active">
-              <nuxt-link to="/" class="nav-link">Player</nuxt-link>
-            </li>
-            <li class="nav-item">
-              <nuxt-link to="/manager" class="nav-link">Manager</nuxt-link>
-            </li>
-          </ul>
-        </div>
+        <b-navbar-brand to="/">Music App</b-navbar-brand>
+        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+        <b-collapse class="justify-content-end" id="nav-collapse" is-nav>
+          <b-navbar-nav>
+            <b-nav-item to="/">Player</b-nav-item>
+            <b-nav-item to="/manager">Manager</b-nav-item>
+          </b-navbar-nav>
+        </b-collapse>
       </div>
-    </nav>
+    </b-navbar>
   </header>
 </template>
-
-<style scoped>
-  .nav-link,
-  .navbar-brand {
-    color: #ffff !important;
-  }
-</style>
