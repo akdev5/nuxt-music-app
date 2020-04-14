@@ -159,7 +159,50 @@
         }
       },
       addNewMusic() {
-        //
+        let types = /(\.|\/)(mp3|mp4)$/i
+        if (
+          types.test(this.musicDetails.music.type) ||
+          types.test(this.musicDetails.music.name)
+        ) {
+          let formData = new FormData()
+
+          formData.append('title', this.musicDetails.title)
+          formData.append('artist', this.musicDetails.artist)
+          formData.append('music', this.musicDetails.music)
+          this.addLoading = true
+          this.$axios
+            .$post('/music', formData)
+            .then(response => {
+              this.addLoading = false
+              this.musicDetails = {}
+              this.getAllMusics()
+              this.addState = false
+
+              this.$swal.fire({
+                title: 'Success!',
+                text: 'New Music Added',
+                icon: 'success'
+              })
+            })
+            .catch(err => {
+              this.addLoading = false
+              console.log(err)
+
+              this.$swal.fire({
+                title: 'Error!',
+                text: 'Something Went wrong',
+                icon: 'error'
+              })
+            })
+        } else {
+          this.$swal.fire({
+            title: 'Error!',
+            text: 'Invalid file type',
+            icon: 'error'
+          })
+
+          return !this.isValid
+        }
       },
       deleteMusic(id) {
         console.log(id)
