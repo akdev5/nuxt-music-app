@@ -1,8 +1,8 @@
 <template>
   <section class="mt-5">
-    <div class="container mb-4">
-      <div class="row">
-        <div class="col-md-12">
+    <b-container>
+      <b-row class="mb-4">
+        <b-col>
           <div class="card" v-if="addState">
             <div class="card-body">
               <div class="card-title mb-4">
@@ -13,13 +13,21 @@
                   <label for="title">
                     Title <span class="text-danger"> *</span>
                   </label>
-                  <input type="text" v-model="musicDetails.title" class="form-control" />
+                  <input
+                    type="text"
+                    v-model="musicDetails.title"
+                    class="form-control"
+                  />
                 </div>
                 <div class="form-group">
                   <label for="artist">
                     Artist <span class="text-danger"> *</span>
                   </label>
-                  <input type="text" v-model="musicDetails.artist" class="form-control" />
+                  <input
+                    type="text"
+                    v-model="musicDetails.artist"
+                    class="form-control"
+                  />
                 </div>
                 <div class="form-group">
                   <label for="artist">
@@ -51,18 +59,19 @@
               </form>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
+        </b-col>
+      </b-row>
+
+      <b-row>
+        <b-col>
           <div class="card bg-light p-1 showdow-sm">
             <div class="card-title">
               <button
                 class="btn btn-info m-3"
                 @click="initForm"
-              >{{addState?"Cancel":"Add New Music"}}</button>
+              >
+                {{addState ? 'Cancel' : 'Add New Music'}}
+              </button>
             </div>
             <div class="card-body">
               <table class="table">
@@ -77,12 +86,13 @@
                 </thead>
                 <tbody
                   v-if="musicLoading"
-                  class="spinner-border"
                   role="status"
                 >
                   <tr>
-                    <td colspan="5">
-                      <span class="sr-only">Loading...</span>
+                    <td colspan="5" class="text-center">
+                      <div class="spinner-border">
+                        <span class="sr-only">Loading...</span>
+                      </div>
                     </td>
                   </tr>
                 </tbody>
@@ -102,9 +112,9 @@
               </table>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
+        </b-col>
+      </b-row>
+    </b-container>
   </section>
 </template>
 
@@ -145,15 +155,15 @@
       async getAllMusics() {
         this.musicLoading = true
         try {
-          let data = await this.$axios.$get('/music')
-          this.allmusic = data
+          this.allmusic = await this.$axios.$get('/music')
+
           this.musicLoading = false
         } catch (err) {
           this.musicLoading = false
 
           this.$swal.fire({
             title: 'Error!',
-            text: 'Error Fetting Musics',
+            text: 'Error in fetching Musics.',
             icon: 'error'
           })
         }
@@ -169,35 +179,37 @@
           formData.append('title', this.musicDetails.title)
           formData.append('artist', this.musicDetails.artist)
           formData.append('music', this.musicDetails.music)
+
           this.addLoading = true
+
           this.$axios
             .$post('/music', formData)
             .then(response => {
               this.addLoading = false
-              this.musicDetails = {}
-              this.getAllMusics()
               this.addState = false
+              this.musicDetails = {}
+
+              this.getAllMusics()
 
               this.$swal.fire({
                 title: 'Success!',
-                text: 'New Music Added',
+                text: 'New Music has been added successfully.',
                 icon: 'success'
               })
             })
             .catch(err => {
               this.addLoading = false
-              console.log(err)
 
               this.$swal.fire({
                 title: 'Error!',
-                text: 'Something Went wrong',
+                text: 'Something went wrong.',
                 icon: 'error'
               })
             })
         } else {
           this.$swal.fire({
             title: 'Error!',
-            text: 'Invalid file type',
+            text: 'Invalid file type.',
             icon: 'error'
           })
 
@@ -205,7 +217,39 @@
         }
       },
       deleteMusic(id) {
-        console.log(id)
+        this.$swal.fire({
+          title: 'Are you sure?',
+          text: 'Once deleted, you will not be able to recover this Music.',
+          icon: 'warning',
+          showCancelButton: true
+        }).then(({value}) => {
+          if (value) {
+            this.$axios
+              .$delete(`/music/${id}`)
+              .then(response => {
+                this.getAllMusics()
+
+                this.$swal.fire({
+                  title: 'Success!',
+                  text: 'Your Music file has been deleted.',
+                  icon: 'success'
+                })
+              })
+              .catch(err => {
+                this.$swal.fire({
+                  title: 'Error!',
+                  text: 'Something went wrong.',
+                  icon: 'error'
+                })
+              })
+          } else {
+            this.$swal.fire({
+              title: 'Alert!',
+              text: 'Your Music file is safe.',
+              icon: 'info'
+            })
+          }
+        })
       }
     },
     created() {
@@ -214,9 +258,3 @@
   }
 </script>
 
-<style type="text/css" scoped>
-  .spinner-border {
-    width: 3rem;
-    height: 3rem;
-  }
-</style>
