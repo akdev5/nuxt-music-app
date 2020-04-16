@@ -3,115 +3,111 @@
     <b-container>
       <b-row class="mb-4">
         <b-col>
-          <div class="card" v-if="addState">
-            <div class="card-body">
-              <div class="card-title mb-4">
-                <h4>Add Music</h4>
-              </div>
-              <form @submit.prevent="addNewMusic" enctype="multipart/form-data">
-                <div class="form-group">
-                  <label for="title">
-                    Title <span class="text-danger"> *</span>
-                  </label>
-                  <input
-                    type="text"
-                    v-model="musicDetails.title"
-                    class="form-control"
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="artist">
-                    Artist <span class="text-danger"> *</span>
-                  </label>
-                  <input
-                    type="text"
-                    v-model="musicDetails.artist"
-                    class="form-control"
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="artist">
-                    Music <span class="text-danger"> *</span>
-                  </label>
-                  <div class="custom-file">
-                    <input
-                      type="file"
-                      id="customFile"
-                      ref="file"
-                      v-on:change="handleFileUpload()"
-                      class="custom-file-input"
-                    />
-                    <label class="custom-file-label" for="customFile">
-                      Choose file
-                    </label>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <button class="btn btn-primary" :disabled="isDisabled">
-                    <span
-                      class="spinner-border spinner-border-sm"
-                      v-if="addLoading"
-                      role="status"
-                      aria-hidden="true"
-                    ></span>Submit
-                  </button>
-                </div>
-              </form>
+          <b-card v-if="addState">
+            <div class="card-title mb-4">
+              <h4>Add Music</h4>
             </div>
-          </div>
+            <b-form @submit.prevent="addNewMusic" enctype="multipart/form-data">
+              <b-form-group
+                label="Title"
+                label-for="title"
+              >
+                <b-form-input
+                  id="title"
+                  v-model="musicDetails.title"
+                  type="text"
+                  required
+                ></b-form-input>
+              </b-form-group>
+              <b-form-group
+                label="Artist"
+                label-for="artist"
+              >
+                <b-form-input
+                  id="artist"
+                  v-model="musicDetails.artist"
+                  type="text"
+                  required
+                ></b-form-input>
+              </b-form-group>
+              <b-form-group>
+                <label for="customFile">
+                  Music
+                </label>
+                <div class="custom-file">
+                  <input
+                    type="file"
+                    id="customFile"
+                    ref="file"
+                    v-on:change="handleFileUpload()"
+                    class="custom-file-input"
+                  />
+                  <label class="custom-file-label" for="customFile">
+                    Choose file
+                  </label>
+                </div>
+              </b-form-group>
+              <b-form-group>
+                <button class="btn btn-primary" :disabled="isDisabled">
+                  <span
+                    class="spinner-border spinner-border-sm"
+                    v-if="addLoading"
+                    role="status"
+                    aria-hidden="true"
+                  ></span>Submit
+                </button>
+              </b-form-group>
+            </b-form>
+          </b-card>
         </b-col>
       </b-row>
 
       <b-row>
         <b-col>
-          <div class="card bg-light p-1 showdow-sm">
-            <div class="card-title">
-              <button
-                class="btn btn-info m-3"
-                @click="initForm"
+          <b-card class="bg-light p-1 showdow-sm">
+            <button
+              class="btn btn-info mb-4"
+              @click="initForm"
+            >
+              {{addState ? 'Cancel' : 'Add New Music'}}
+            </button>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Artist</th>
+                  <th scope="col">Date created</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody
+                v-if="musicLoading"
+                role="status"
               >
-                {{addState ? 'Cancel' : 'Add New Music'}}
-              </button>
-            </div>
-            <div class="card-body">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Artist</th>
-                    <th scope="col">Date created</th>
-                    <th scope="col">Action</th>
-                  </tr>
-                </thead>
-                <tbody
-                  v-if="musicLoading"
-                  role="status"
-                >
-                  <tr>
-                    <td colspan="5" class="text-center">
-                      <div class="spinner-border">
-                        <span class="sr-only">Loading...</span>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-                <tbody v-else>
-                  <tr v-for="(music, index) in allmusic" :key="index">
-                    <td>{{ index + 1 }}</td>
-                    <td>{{ music.title }}</td>
-                    <td>{{ music.artist }}</td>
-                    <td>{{ music.created }}</td>
-                    <td>
-                      <button class="btn btn-info" @click="deleteMusic(music._id)">
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+                <tr>
+                  <td colspan="5" class="text-center">
+                    <div class="spinner-border">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+              <tbody v-else>
+                <tr v-for="(music, index) in allmusic" :key="index">
+                  <td>{{ index + 1 }}</td>
+                  <td>{{ music.title }}</td>
+                  <td>{{ music.artist }}</td>
+                  <td>{{ music.created }}</td>
+                  <td>
+                    <button class="btn btn-info" @click="deleteMusic(music._id)">
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </b-card>
         </b-col>
       </b-row>
     </b-container>
