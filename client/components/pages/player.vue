@@ -83,7 +83,7 @@
       async initPlayer() {
         if (this.allMusic !== []) {
           this.current = await this.allMusic[this.index]
-          this.player.src = `http://localhost:4000/${this.current.music.path}`
+          this.player.src = `${process.env.baseUrl}/${this.current.music.path}`
         } else {
           this.song = true
         }
@@ -106,7 +106,7 @@
       play(song) {
         if (song) {
           this.current = song
-          this.player.src = `http://localhost:4000/${this.current.music.path}`
+          this.player.src = `${process.env.baseUrl}/${this.current.music.path}`
         }
         this.player.play()
         this.isplaying = true

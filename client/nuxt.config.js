@@ -16,9 +16,17 @@ module.exports = {
     ]
   },
   /*
+  ** The env Properties
+  */
+  env: {
+    baseUrl: process.env.BASE_URL || 'http://localhost:4000'
+  },
+  /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#fff' },
+  loading: {
+    color: '#fff'
+  },
   /*
   ** Global CSS
   */
@@ -65,6 +73,6 @@ module.exports = {
   */
   axios: {
     // proxyHeaders: false
-    baseURL:'http://localhost:4000'
+    baseURL: process.env.BASE_URL || 'http://localhost:4000'
   }
 }

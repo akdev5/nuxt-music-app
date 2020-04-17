@@ -165,7 +165,7 @@
         }
       },
       addNewMusic() {
-        let types = /(\.|\/)(mp3|mp4)$/i
+        const types = /(\.|\/)(mp3|mp4)$/i
         if (
           types.test(this.musicDetails.music.type) ||
           types.test(this.musicDetails.music.name)

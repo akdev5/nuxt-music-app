@@ -20,7 +20,7 @@ npm install
 ### Compiles and hot-reloads client for development
 ```
 cd client
-npm run start
+npm run dev
 ```
 
 ### Run the server for development
@@ -28,6 +28,3 @@ npm run start
 cd server
 node index.js
 ```
-
-## Scripts
-- `npm test` - run client and server tests once
