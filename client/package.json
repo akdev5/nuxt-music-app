@@ -21,7 +21,7 @@
     "sweetalert2": "^9.10.11"
   },
   "devDependencies": {
-    "nodemon": "^1.18.9",
+    "nodemon": "^2.0.20",
     "@nuxt/typescript-build": "^0.6.0"
   }
 }
